@@ -432,7 +432,7 @@
 	function triggerScroll() {
 		logTrace('invoking triggerScroll()');
 
-		const scrollbarNodeSelector = '.simplebar-content.root-scrollable__content';
+		const scrollbarNodeSelector = '[data-a-target="root-scroller"]';
 		const scrollbarNode         = rootNode.querySelector(scrollbarNodeSelector);
 
 		if (scrollbarNode !== null) {
@@ -486,12 +486,8 @@
 		// if items were removed, trigger scroll event to request more items
 		if (remainingItems.length < items.length) {
 
-			// the frontpage has no additional items
-			if (currentPageType !== 'frontpage') {
-
-				logVerbose('Items in the directory were removed. Attempting to request more items.');
-				triggerScroll();
-			}
+			logVerbose('Items in the directory were removed. Attempting to request more items.');
+			triggerScroll();
 		}
 
 		return remainingItems;
