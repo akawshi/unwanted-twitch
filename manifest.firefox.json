@@ -42,7 +42,10 @@
 	"manifest_version": 3,
 	"browser_specific_settings": {
 		"gecko": {
-			"id": "unwanted@twitch.tv"
+			"id": "unwanted@twitch.tv",
+			"data_collection_permissions": {
+				"required": [ "none" ]
+			}
 		}
 	}
 }
