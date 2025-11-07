@@ -686,7 +686,7 @@
 
 			case 'collection':
 
-				selector = '!article[data-a-target^="card-"]%';
+				selector = '!article%';
 
 			break;
 
@@ -886,6 +886,12 @@
 			return readChannel( node.querySelector('article') );
 		}
 
+		// collection
+		if (node.querySelector('a[data-a-target="preview-card-image-link"]') !== null) {
+
+			return readChannel(node);
+		}
+
 		switch (target) {
 
 			// channel
@@ -925,24 +931,15 @@
 
 		/* BEGIN: title */
 
-			buffer = parent.querySelector('a[data-a-target="preview-card-title-link"], h3[title]');
+			buffer = parent.querySelector('h4[title]');
 
 			if (buffer) {
 
-				result.title = buffer.textContent.trim();
+				result.title = buffer.title.trim();
 
 			} else {
 
-				buffer = parent.querySelectorAll('p[title]');
-
-				if (buffer && (buffer.length >= 2)) {
-
-					result.title = buffer[1].textContent.trim();
-
-				} else {
-
-					logVerbose('Unable to determine title of channel.', node);
-				}
+				logVerbose('Unable to determine title of channel.', node);
 			}
 
 		/* END: title */
@@ -1440,8 +1437,7 @@
 						topNodes.push(topNode.parentNode.parentNode);
 
 					} else if (
-						(topNode.nodeName === 'ARTICLE') &&
-						(aTarget.indexOf('card-') >= 0)
+						(topNode.nodeName === 'ARTICLE')
 					) {
 
 						// parent's parent node of match
@@ -2283,7 +2279,7 @@
 
 					case 'collection':
 
-						indicator = mainNode.querySelector('article[data-a-target^="card-"]');
+						indicator = mainNode.querySelector('article a[data-a-target]');
 						if (indicator !== null) {
 
 							stopPageChangePolling();
