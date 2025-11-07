@@ -422,6 +422,23 @@
 				logInfo('Found ' + nodesLength + ' unprocessed nodes in the directory of the current page.', nodes);
 				onScroll();
 			}
+			// look for new tags
+			else {
+
+				const newTagNodes = rootNode.querySelectorAll('a.tw-tag[data-a-target]:not([data-uttv-read="tag"])');
+				for (let i = 0; i < newTagNodes.length; i++) {
+
+					const node = newTagNodes[i];
+
+					const itemNode = traverseUp(node, 'article');
+					if (itemNode) {
+
+						itemNode.querySelector('[data-uttv-processed]')?.removeAttribute('data-uttv-processed');
+						itemNode.querySelector('[data-uttv-tags-attached]')?.removeAttribute('data-uttv-tags-attached');
+					}
+				}
+
+			}
 
 		}, interval);
 	}
@@ -1111,6 +1128,8 @@
 					name: tagName,
 					node: tagNode
 				});
+
+				tagNode.setAttribute('data-uttv-read', 'tag');
 			}
 
 		} else {

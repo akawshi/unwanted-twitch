@@ -215,6 +215,23 @@ async function storageClear() {
 	return error;
 }
 
+/**
+ * Traverses up until the provided selector is matched.
+ */
+function traverseUp(node, selector) {
+
+	while (
+		(node = node.parentNode) &&
+		(node !== document)
+	) {
+		if (!selector || node.matches(selector)) {
+			return node;
+		}
+	}
+
+	return null;
+}
+
 function logTrace() {
 
 	if (debug > 0) { return null; }
